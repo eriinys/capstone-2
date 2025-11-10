@@ -1,3 +1,5 @@
+package util;
+import model.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,23 +35,32 @@ public class ReceiptWriter {
             bw.newLine();
 
             for (Product product : order.getOrder()){
-                bw.write(String.format("| %s %s x%-20d | %10.2f |", product.itemName, product.getSize(), product.getQuantity() ,product.getPrice()));
-                bw.newLine();
+                if (product.hasSize()){
+                    bw.write(String.format("| %s %s x%-20d | %10.2f |", product.getItemName(), product.getSize(), product.getQuantity() ,product.getPrice()));
+                    bw.newLine();
+                } else {
+                    bw.write(String.format("| %s    x%-20d | %10.2f |", product.getItemName(), product.getQuantity() ,product.getPrice()));
+                    bw.newLine();
+                }
                 //writing bread type & topping specifically for garlic bread:
                 if (product instanceof GarlicBread){
-                    bw.write(String.format("| %s %s x%-20d | %10.2f |", product.itemName, product.getSize(), product.getQuantity() ,product.getPrice()));
+                    bw.write(String.format("| %s %s x%-20d | %10.2f |", product.getItemName(), product.getSize(), product.getQuantity() ,product.getPrice()));
                     bw.newLine();
                     bw.write(String.format("|  -%s %-20s | %10s |", "Bread Type:", ((GarlicBread) product).getBreadType(), ""));
                     bw.newLine();
-                    GarlicBread garlicBread = (GarlicBread) product; //downcasts Product to GarlicBread inside instanceof GarlicBread if statement
-                    List<ToppingOption> topping = garlicBread.getToppings();
+                    GarlicBread garlicBread = (GarlicBread) product; //downcasts model.Product to model.GarlicBread inside instanceof model.GarlicBread if statement
+                    List<Topping> topping = garlicBread.getToppings();
                     if(!topping.isEmpty()){
                         bw.write(String.format("|  %-19s | %10s |", "-Toppings:", ""));
                         bw.newLine();
-                        for (ToppingOption top : topping){
-                            bw.write(String.format("|   %s x%-18s | $%10.2f |", top.getToppingName(), top.getPortion(), top.getPrice()));
+                        for (Topping top : topping){
+                            bw.write(String.format("|   %s x%-18s | $%10.2f |", top.getName(), top.getPortion(), top.getTotalPrice()));
                             bw.newLine();
                         }
+                    }
+                    if (garlicBread.isSpecialized()){
+                        bw.write(String.format("|  %19s | %.2f", "Special Added: Cheese Stuffed Garlic Bread"));
+                        bw.newLine();
                     }
                 }
             }
