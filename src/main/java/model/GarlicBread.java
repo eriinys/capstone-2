@@ -22,8 +22,9 @@ public class GarlicBread extends Product{
         return breadType;
     }
 
+    @Override
     public String getSize(){
-        return size;
+        return size; //overrides default getSize method's empty string
     }
 
     public boolean isSpecialized() {
@@ -55,6 +56,11 @@ public class GarlicBread extends Product{
     }
 
     @Override
+    public boolean hasSize(){
+        return true; //override hasSize to true for product with size
+    }
+
+    @Override
     public double getPrice() {
         double toppingPrice = 0.00;
         for (Topping topping : toppings){
@@ -82,7 +88,7 @@ public class GarlicBread extends Product{
                 Garlic Bread🥖
                  -Bread Type: 
                    -%s
-                 -Bread Size: 
+                 -Size: 
                    -%s
                  -Toppings:
                    -%s
