@@ -109,7 +109,7 @@ public class UserInterface {
 
                 if (isPremium) {
                     System.out.println("Please choose a topping from menu below:\n");
-                    menu.printPremiumTopping(); //calls premiumMenu from Menu
+                    menu.printPremiumTopping(); //calls premium menu from Menu
                     String chosenTopping = scanner.nextLine();
                     System.out.println("""
                             Choose portion (enter number):
@@ -121,7 +121,7 @@ public class UserInterface {
                     toppings.add(new Topping(chosenTopping, isPremium, portion));
                 } else {
                     System.out.println("Please choose a topping from menu below:\n");
-                    menu.printRegularTopping(); //calls regularMenu from Menu
+                    menu.printRegularTopping(); //calls regular menu from Menu
                     String chosenTopping = scanner.nextLine();
                     System.out.println("""
                             Choose portion (enter number):
@@ -166,15 +166,47 @@ public class UserInterface {
     }
 
     public void processAddDrink(){
+        System.out.println("Please choose a drink from menu below:\n");
+        menu.printDrinks(); //calls drink menu from Menu
+        String chosenDrink = scanner.nextLine();
 
+        System.out.println("""
+        Please choose a size:
+        o S
+        o M  +$2.50
+        o L  +$3.50
+        """);
+        String size = scanner.nextLine().toLowerCase();
+
+        System.out.println("How many would you like (enter number)?:\n");
+        int quantity = Integer.parseInt(scanner.nextLine());
+
+        Drinks drink = new Drinks(chosenDrink, size, quantity);
+        order.addItem(drink); //adds drink to order
     }
 
     public void processAddSide(){
+        System.out.println("Please choose a side from menu below:\n");
+        menu.printSides(); //calls side menu from Menu
+        String chosenSide = scanner.nextLine();
 
+        System.out.println("How many would you like (enter number)?:\n");
+        int quantity = Integer.parseInt(scanner.nextLine());
+
+        Sides side = new Sides(chosenSide, quantity);
+        order.addItem(side);
     }
 
     public void processAddDessert(){
+        System.out.println("Please choose a dessert from menu below:\n");
+        menu.printDessert(); //calls dessert menu from Menu
+        String chosenDessert = scanner.nextLine();
 
+        System.out.println("How many would you like (enter number)?:\n");
+        int quantity = Integer.parseInt(scanner.nextLine());
+
+        Dessert dessert = new Dessert(chosenDessert, quantity);
+        order.addItem(dessert);
     }
 
     public void processCheckout(){
