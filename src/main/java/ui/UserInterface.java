@@ -109,20 +109,20 @@ public class UserInterface {
 
                 if (isPremium) {
                     System.out.println("Please choose a topping from menu below:\n");
-                    menu.printPremiumTopping(); //calls premium menu from Menu
-                    String chosenTopping = scanner.nextLine();
+                    menu.printMenu(Menu.getPremiumTopping(), Menu.getPremiumPrices()); //calls collection of premium topping from Menu
+                    String chosenTopping = readUserInput(Menu.getPremiumTopping());
                     System.out.println("""
                             Choose portion (enter number):
-                            x1
-                            x2
-                            x3
+                            1
+                            2
+                            3
                             """);
                     int portion = Integer.parseInt(scanner.nextLine());
                     toppings.add(new Topping(chosenTopping, isPremium, portion));
                 } else {
                     System.out.println("Please choose a topping from menu below:\n");
-                    menu.printRegularTopping(); //calls regular menu from Menu
-                    String chosenTopping = scanner.nextLine();
+                    menu.printMenu(Menu.getRegularTopping(), Menu.getRegularPrices()); //calls collection of regular topping from Menu
+                    String chosenTopping = readUserInput(Menu.getRegularTopping());
                     System.out.println("""
                             Choose portion (enter number):
                             1
@@ -167,8 +167,8 @@ public class UserInterface {
 
     public void processAddDrink(){
         System.out.println("Please choose a drink from menu below:\n");
-        menu.printDrinks(); //calls drink menu from Menu
-        String chosenDrink = scanner.nextLine();
+        menu.printMenu(Menu.getDrinkName(), Menu.getDrinkPrices()); //calls collection of drink from Menu
+        String chosenDrink = readUserInput(Menu.getDrinkName());
 
         System.out.println("""
         Please choose a size:
@@ -187,8 +187,8 @@ public class UserInterface {
 
     public void processAddSide(){
         System.out.println("Please choose a side from menu below:\n");
-        menu.printSides(); //calls side menu from Menu
-        String chosenSide = scanner.nextLine();
+        menu.printMenu(Menu.getSideName(), Menu.getSidePrices()); //calls collection of side from Menu
+        String chosenSide = readUserInput(Menu.getSideName());
 
         System.out.println("How many would you like (enter number)?:\n");
         int quantity = Integer.parseInt(scanner.nextLine());
@@ -199,8 +199,8 @@ public class UserInterface {
 
     public void processAddDessert(){
         System.out.println("Please choose a dessert from menu below:\n");
-        menu.printDessert(); //calls dessert menu from Menu
-        String chosenDessert = scanner.nextLine();
+        menu.printMenu(Menu.getDessertName(), Menu.getDessertPrices()); //calls collection of dessert from Menu
+        String chosenDessert = readUserInput(Menu.getDessertName());
 
         System.out.println("How many would you like (enter number)?:\n");
         int quantity = Integer.parseInt(scanner.nextLine());
@@ -215,5 +215,19 @@ public class UserInterface {
 
     public void processCancelOrder(){
 
+    }
+
+    //helper method to validate user input
+    private String readUserInput(Map<String, String> menuChoice){
+        String choice;
+        while(true){
+            System.out.println("Enter choice (inside []): ");
+            choice = scanner.nextLine().toUpperCase();
+            if (menuChoice.containsKey(choice)){
+                return choice;
+            } else {
+                System.out.println("Invalid input. Please enter a valid choice inside [].");
+            }
+        }
     }
 }
