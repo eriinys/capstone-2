@@ -9,13 +9,13 @@ public class GarlicBread extends Product{
     private double basePrice;
     private List<Topping> toppings;
 
-    public GarlicBread(String itemName, String size, int quantity, double price, String breadType, boolean specialized) {
-        super(itemName, quantity, price);
+    public GarlicBread(String itemName, String size, int quantity, String breadType, boolean specialized, List<Topping> toppings) {
+        super(itemName, quantity);
         this.breadType = breadType;
         this.size = size;
         this.specialized = specialized;
-        this.toppings = new ArrayList<>();
-        this.basePrice = 5.50;
+        this.toppings = new ArrayList<>(toppings);
+        this.basePrice = 4.50;
     }
 
     public String getBreadType() {
@@ -36,9 +36,9 @@ public class GarlicBread extends Product{
         if (size.equalsIgnoreCase("s")){
             sizePrice = 0.00;
         } else if (size.equalsIgnoreCase("m")){
-            sizePrice = 1.50;
+            sizePrice = 2.00;
         } else if (size.equalsIgnoreCase("l")){
-            sizePrice = 3.00;
+            sizePrice = 3.25;
         }
         return sizePrice;
     }

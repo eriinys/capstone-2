@@ -1,9 +1,10 @@
 package model;
 
 public class Sides extends Product {
+    private double price;
 
-    public Sides(String itemName, int quantity, double price) {
-        super(itemName, quantity, price);
+    public Sides(String itemName, int quantity) {
+        super(itemName, quantity);
     }
 
     @Override

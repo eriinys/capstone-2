@@ -4,13 +4,10 @@ public abstract class Product {
 
     protected String itemName;
     protected int quantity;
-    protected double price;
 
-    public Product(String itemName, int quantity, double price) {
+    public Product(String itemName, int quantity) {
         this.itemName = itemName;
         this.quantity = quantity;
-        this.price = price;
-
     }
 
     public String getItemName() {

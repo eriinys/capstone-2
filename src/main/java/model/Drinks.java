@@ -2,9 +2,10 @@ package model;
 
 public class Drinks extends Product{
     private String size;
+    private double price;
 
-    public Drinks(String itemName, String size, int quantity, double price) {
-        super(itemName, quantity, price);
+    public Drinks(String itemName, String size, int quantity) {
+        super(itemName, quantity);
         this.size = size;
     }
 

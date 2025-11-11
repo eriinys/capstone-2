@@ -1,9 +1,10 @@
 package model;
 
 public class Dessert extends Product{
+    private double price;
 
-    public Dessert(String itemName, int quantity, double price) {
-        super(itemName, quantity, price);
+    public Dessert(String itemName, int quantity) {
+        super(itemName, quantity);
     }
 
     @Override
