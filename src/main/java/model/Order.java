@@ -38,22 +38,23 @@ public class Order {
         return total;
     }
 
-    public void checkout() {
+    public boolean checkout() {
         if (productList.isEmpty()){
             System.out.println("Order is empty. Please add at least one side, drink, dessert or garlic bread.");
-            return;
+            return false;
         }
 
         boolean meetRequirement = hasMain() || hasDrinkOrSide(); //sets rule to check for requirement
-
-        if (meetRequirement) {
-            for (Product p : productList) {
-                p.getSummary();
-            }
-        } else {
-            System.out.println("Minimum requirement for checkout not met:\n" +
+        if (!meetRequirement) {
+         System.out.println("Minimum requirement for checkout not met:\n" +
                     "Must order a side, drink, or dessert.");
+            return false;
         }
+
+        for (Product p : productList) {
+            p.getSummary();
+        }
+            return true;
     }
 
     public void cancelOrder() {
