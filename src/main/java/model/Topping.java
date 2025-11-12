@@ -19,6 +19,9 @@ public class Topping {
     public double getBasePrice(){
         return basePrice;
     }
+    public void setBasePrice(double bp){
+        basePrice = bp;
+    }
 
     public boolean isPremium(){
         return premium;
@@ -31,9 +34,11 @@ public class Topping {
     //Add price calculation for size
 
     public double getTotalPrice(){
-        double total = getBasePrice() * portion;
-        if (portion == 0){
-            total = 0;
+        double total;
+        if (portion <= 0){
+            total = 0.00;
+        } else {
+            total = getBasePrice() * portion;
         }
         return total;
     }
