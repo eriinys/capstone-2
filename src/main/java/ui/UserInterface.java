@@ -88,9 +88,14 @@ public class UserInterface {
         System.out.println("""
                 Would you like to add topping?:
                 o Yes
-                o No
+                o No (Classic Garlic Bread  |  $4.50)
                 """);
         String addTopping = scanner.nextLine();
+
+        while(!addTopping.equalsIgnoreCase("yes") && !addTopping.equalsIgnoreCase("no")){
+            System.out.println("Invalid input. Please enter yes or no: ");
+            addTopping = scanner.nextLine();
+        }
 
         List<Topping> toppings = new ArrayList<>();
         if (addTopping.equalsIgnoreCase("yes")) {
@@ -100,13 +105,8 @@ public class UserInterface {
                         Please select your topping choice:
                         o Regular Topping
                         o Premium Topping
-                        o No Topping (Classic Garlic Bread  |  $4.50)
                         """);
                 String addTop = scanner.nextLine();
-
-                if (addTop.equalsIgnoreCase("no topping")){
-                    break; //ends topping option loop
-                }
 
                 boolean isPremium;
                 if (addTop.toLowerCase().contains("premium")) {
@@ -121,7 +121,11 @@ public class UserInterface {
                 if (isPremium) {
                     System.out.println("Please choose a topping from menu below:\n");
                     menu.printMenu(Menu.getPremiumTopping(), Menu.getPremiumPrices()); //calls collection of premium topping from Menu
+
                     String chosenTopping = readUserInput(Menu.getPremiumTopping());
+                    String itemName = Menu.getPremiumTopping().get(chosenTopping);
+                    double basePrice = Menu.getPremiumPrices().get(chosenTopping);
+
                     System.out.println("""
                             Choose portion (enter number):
                             1
@@ -129,11 +133,18 @@ public class UserInterface {
                             3
                             """);
                     int portion = Integer.parseInt(scanner.nextLine());
-                    toppings.add(new Topping(chosenTopping, isPremium, portion));
+                    Topping t = new Topping(itemName, isPremium, portion);
+                    t.setBasePrice(basePrice);
+                    toppings.add(t);
+
                 } else {
                     System.out.println("Please choose a topping from menu below:\n");
                     menu.printMenu(Menu.getRegularTopping(), Menu.getRegularPrices()); //calls collection of regular topping from Menu
+
                     String chosenTopping = readUserInput(Menu.getRegularTopping());
+                    String itemName = Menu.getRegularTopping().get(chosenTopping);
+                    double basePrice = Menu.getRegularPrices().get(chosenTopping);
+
                     System.out.println("""
                             Choose portion (enter number):
                             1
@@ -141,7 +152,9 @@ public class UserInterface {
                             3
                             """);
                     int portion = Integer.parseInt(scanner.nextLine());
-                    toppings.add(new Topping(chosenTopping, isPremium, portion));
+                    Topping t = new Topping(itemName, isPremium, portion);
+                    t.setBasePrice(basePrice);
+                    toppings.add(t);
                 }
 
                 System.out.println("Would you like to add another toppings?");
@@ -150,8 +163,8 @@ public class UserInterface {
                     inTopping = false; //ends topping loop
                 }
             }
-
         }
+
         boolean isSpecialized = false;
         System.out.println("""
                 Would you like to upgrade to Cheese Stuffed Garlic Bread (+$2.50)?
@@ -162,7 +175,7 @@ public class UserInterface {
         if (specialized.equalsIgnoreCase("yes")) {
             isSpecialized = true;
         }
-        System.out.println("Enter the quantity in number format:");
+        System.out.println("Enter quantity (number):");
         int quantity = Integer.parseInt(scanner.nextLine());
 
         if (addTopping.equalsIgnoreCase("yes")){
@@ -179,7 +192,10 @@ public class UserInterface {
     public void processAddDrink(){
         System.out.println("Please choose a drink from menu below:\n");
         menu.printMenu(Menu.getDrinkName(), Menu.getDrinkPrices()); //calls collection of drink from Menu
+
         String chosenDrink = readUserInput(Menu.getDrinkName());
+        String itemName = Menu.getDrinkName().get(chosenDrink);
+        double basePrice = Menu.getDrinkPrices().get(chosenDrink);
 
         System.out.println("""
         Please choose a size:
@@ -192,31 +208,40 @@ public class UserInterface {
         System.out.println("How many would you like (enter number)?:\n");
         int quantity = Integer.parseInt(scanner.nextLine());
 
-        Drinks drink = new Drinks(chosenDrink, size, quantity);
+        Drinks drink = new Drinks(itemName, size, quantity);
+        drink.setBasePrice(basePrice);
         order.addItem(drink); //adds drink to order
     }
 
     public void processAddSide(){
         System.out.println("Please choose a side from menu below:\n");
         menu.printMenu(Menu.getSideName(), Menu.getSidePrices()); //calls collection of side from Menu
+
         String chosenSide = readUserInput(Menu.getSideName());
+        String itemName = Menu.getSideName().get(chosenSide);
+        double basePrice = Menu.getSidePrices().get(chosenSide);
 
         System.out.println("How many would you like (enter number)?:\n");
         int quantity = Integer.parseInt(scanner.nextLine());
 
-        Sides side = new Sides(chosenSide, quantity);
+        Sides side = new Sides(itemName, quantity);
+        side.setBasePrice(basePrice);
         order.addItem(side);
     }
 
     public void processAddDessert(){
         System.out.println("Please choose a dessert from menu below:\n");
         menu.printMenu(Menu.getDessertName(), Menu.getDessertPrices()); //calls collection of dessert from Menu
+
         String chosenDessert = readUserInput(Menu.getDessertName());
+        String itemName = Menu.getDessertName().get(chosenDessert);
+        double basePrice = Menu.getDessertPrices().get(chosenDessert);
 
         System.out.println("How many would you like (enter number)?:\n");
         int quantity = Integer.parseInt(scanner.nextLine());
 
-        Dessert dessert = new Dessert(chosenDessert, quantity);
+        Dessert dessert = new Dessert(itemName, quantity);
+        dessert.setBasePrice(basePrice);
         order.addItem(dessert);
     }
 
@@ -227,7 +252,7 @@ public class UserInterface {
             return;
         }
         rw.saveReceipt(order);
-        System.out.println("Order successfully processed!");
+        System.out.println("Order successfully processed!\n");
         order.cancelOrder(); //resets order for next user session
     }
 
