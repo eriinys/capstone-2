@@ -61,4 +61,12 @@ public class Order {
         productList.clear();
     }
 
+    public String printOrderSummary(){
+        StringBuilder sb = new StringBuilder();
+        for (Product p : productList){
+            sb.append(p.getSummary()).append("\n");
+        }
+        return sb.toString();
+    }
+
 }
