@@ -46,8 +46,10 @@ public class UserInterface {
                                 ordering = false;
                             }
                             case 0 -> {
-                                processCancelOrder();
+                                boolean cancel = processCancelOrder();
+                                if (cancel) {
                                 ordering = false;
+                                }
                             }
                         }
                     }
@@ -256,7 +258,7 @@ public class UserInterface {
         order.cancelOrder(); //resets order for next user session
     }
 
-    public void processCancelOrder(){
+    public boolean processCancelOrder(){
         System.out.println("""
                 Proceed to cancel order?
                 o Yes
@@ -266,7 +268,13 @@ public class UserInterface {
         if (choice.equalsIgnoreCase("yes")){
             order.cancelOrder();
             System.out.println("Your order has been canceled.");
+            return true;
         }
+        while(!choice.contains("yes") && !choice.contains("no")){
+            System.out.println("Please enter yes or no.");
+            choice = scanner.nextLine().toLowerCase();
+        }
+        return false;
     }
 
     //helper method to validate user input
