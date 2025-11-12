@@ -20,7 +20,7 @@ public class Drinks extends Product{
     }
 
     @Override
-    public double getPrice() {
+    public double getSizePrice(){
         double sizePrice = 0;
         if (size.equalsIgnoreCase("s")){
             sizePrice = 0.00;
@@ -29,7 +29,12 @@ public class Drinks extends Product{
         } else if (size.equalsIgnoreCase("l")){
             sizePrice = 3.50;
         }
-        return price += sizePrice;
+        return sizePrice;
+    }
+
+    @Override
+    public double getPrice() {
+        return getBasePrice() + getSizePrice();
     }
 
     @Override

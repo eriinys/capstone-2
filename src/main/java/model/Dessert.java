@@ -1,7 +1,6 @@
 package model;
 
 public class Dessert extends Product{
-    private double price;
 
     public Dessert(String itemName, int quantity) {
         super(itemName, quantity);
@@ -9,7 +8,7 @@ public class Dessert extends Product{
 
     @Override
     public double getPrice(){
-        return price;
+        return getBasePrice();
     }
 
     @Override
