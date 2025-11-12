@@ -39,7 +39,16 @@ public class Drinks extends Product{
 
     @Override
     public String getSummary() {
-        return String.format("%s  %s  x%d    +$%.2f", getItemName(), getSize() ,getQuantity(), getPrice());
+        return String.format("""
+                 =============🍹Drink🍹=============
+                  -Drink Type:
+                    -%s
+                  -Size:
+                    -%s
+                  -Quantity:
+                    -%d
+                  -Drink Total:   $%.2f
+                 """, getItemName(), getSize().toUpperCase() ,getQuantity(), getPrice());
     }
 
 }

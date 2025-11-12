@@ -72,38 +72,39 @@ public class GarlicBread extends Product{
         for (Topping topping : toppings) {
             toppingPrice += topping.getTotalPrice();
         }
-        double total = getBasePrice() + getSizePrice() + getSpecialPrice() + toppingPrice;
+        double total = (getBasePrice() + getSizePrice() + getSpecialPrice() + toppingPrice) * getQuantity();
         return total;
     }
 
     @Override
     public String getSummary() {
         String bread = getBreadType();
-        String breadSize = String.format("%s      +$%.2f", getSize().toUpperCase(), getSizePrice());
-        StringBuilder top = new StringBuilder();
+        String breadSize = String.format("%s     +$%.2f", getSize().toUpperCase(), getSizePrice());
+        StringBuilder sb = new StringBuilder();
         for (Topping t : toppings){
-            top.append(t.getName());
-            top.append(" x");
-            top.append(t.getPortion());
-            top.append(" +$");
-            top.append(String.format("%.2f", t.getTotalPrice()));
+            sb.append(t.getName());
+            sb.append(" x").append(t.getPortion());
+            sb.append(" +$").append(String.format("%.2f", t.getTotalPrice()));
         }
         String isSpecialized;
         if (specialized){
-            isSpecialized = String.format("Cheese Stuffed Garlic Bread       +$%.2f", getSpecialPrice());
+            isSpecialized = String.format("Cheese Stuffed Garlic Bread     +$%.2f", getSpecialPrice());
         } else {
-            isSpecialized = "N/A";
+            isSpecialized = "No Special Option";
         }
         return String.format("""
-                Garlic Bread🥖
-                 -Bread Type: 
+                =============🥖Garlic Bread🥖=============
+                 -Bread Type:
                    -%s
-                 -Size: 
+                 -Size:
                    -%s
                  -Toppings:
                    -%s
                  -Special Option:
                    -%s
-                 -TOTAL: %.2f""", bread, breadSize, top, isSpecialized, getPrice());
+                 -Quantity:
+                   -%d
+                 -Garlic Bread Total:   $%.2f
+                 """, bread, breadSize, sb, isSpecialized, getQuantity() ,getPrice());
     }
 }

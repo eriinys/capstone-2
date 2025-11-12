@@ -13,7 +13,14 @@ public class Dessert extends Product{
 
     @Override
     public String getSummary() {
-        return String.format("%s  x%d    +$%.2f", getItemName(), getQuantity(), getPrice());
+        return String.format("""
+                =============🍨Dessert🍨=============
+                 -Dessert Type:
+                   -%s
+                 -Quantity:
+                   -%d
+                 -Dessert Total:   $%.2f
+                """, getItemName(), getQuantity(), getPrice());
     }
 
 }

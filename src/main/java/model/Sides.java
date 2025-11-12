@@ -13,7 +13,14 @@ public class Sides extends Product {
 
     @Override
     public String getSummary() {
-        return String.format("%s  x%d    +$%.2f", getItemName(), getQuantity(), getPrice());
+        return String.format("""
+                =============🥗Side🥗=============
+                 -Side Type:
+                   -%s
+                 -Quantity:
+                   -%d
+                 -Side Total:   $%.2f
+                """, getItemName(), getQuantity(), getPrice());
     }
 
 
