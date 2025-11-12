@@ -27,10 +27,16 @@ public class GarlicBread extends Product{
         return size; //overrides default getSize method's empty string
     }
 
+    @Override
+    public double getBasePrice() {
+        return basePrice;
+    }
+
     public boolean isSpecialized() {
         return specialized;
     }
 
+    @Override
     public double getSizePrice(){
         double sizePrice = 0.00;
         if (size.equalsIgnoreCase("s")){
@@ -63,24 +69,28 @@ public class GarlicBread extends Product{
     @Override
     public double getPrice() {
         double toppingPrice = 0.00;
-        for (Topping topping : toppings){
-            toppingPrice += topping.getTotalPrice() * topping.getPortion();
+        for (Topping topping : toppings) {
+            toppingPrice += topping.getTotalPrice();
         }
-        double total = basePrice + toppingPrice + getSpecialPrice();
+        double total = getBasePrice() + getSizePrice() + getSpecialPrice() + toppingPrice;
         return total;
     }
 
     @Override
     public String getSummary() {
         String bread = getBreadType();
-        String breadSize = String.format("%s         +$%.2f", getSize().toUpperCase(), getSizePrice());
-        String top = "";
+        String breadSize = String.format("%s      +$%.2f", getSize().toUpperCase(), getSizePrice());
+        StringBuilder top = new StringBuilder();
         for (Topping t : toppings){
-            top = String.format("%s  x%d    +$%.2f", t.getName(), t.getPortion(), t.getTotalPrice());
+            top.append(t.getName());
+            top.append(" x");
+            top.append(t.getPortion());
+            top.append(" +$");
+            top.append(String.format("%.2f", t.getTotalPrice()));
         }
         String isSpecialized;
         if (specialized){
-            isSpecialized = String.format("Cheese Stuffed Garlic Bread         +$%.2f", getSpecialPrice());
+            isSpecialized = String.format("Cheese Stuffed Garlic Bread       +$%.2f", getSpecialPrice());
         } else {
             isSpecialized = "N/A";
         }
@@ -93,6 +103,7 @@ public class GarlicBread extends Product{
                  -Toppings:
                    -%s
                  -Special Option:
-                   -%s""", bread, breadSize, top, isSpecialized);
+                   -%s
+                 -TOTAL: %.2f""", bread, breadSize, top, isSpecialized, getPrice());
     }
 }

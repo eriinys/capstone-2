@@ -52,7 +52,7 @@ public class Order {
         }
 
         for (Product p : productList) {
-            p.getSummary();
+            System.out.println(p.getSummary());
         }
             return true;
     }
