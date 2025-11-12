@@ -4,6 +4,7 @@ public abstract class Product {
 
     protected String itemName;
     protected int quantity;
+    protected double basePrice;
 
     public Product(String itemName, int quantity) {
         this.itemName = itemName;
@@ -24,6 +25,18 @@ public abstract class Product {
 
     public String getSize(){
         return ""; //default size method that returns empty string
+    }
+
+    public double getSizePrice(){
+        return 0;
+    }
+
+    public double getBasePrice(){
+        return basePrice;
+    }
+
+    public void setBasePrice(double bp) {
+        basePrice = bp;
     }
 
     public abstract double getPrice();
