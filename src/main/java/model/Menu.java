@@ -11,24 +11,24 @@ public class Menu {
     private static final double classicGbPrice = 4.50;
 
     //Regular Topping
-    private static final Map<String, String> regularTopping = new HashMap<>();
+    private static final Map<String, String> regularTopping = new LinkedHashMap<>();
     private static final Map<String, Double> regularPrices = new HashMap<>();
 
     //Premium Topping
-    private static final Map<String, String> premiumTopping = new HashMap<>();
+    private static final Map<String, String> premiumTopping = new LinkedHashMap<>();
     private static final Map<String, Double> premiumPrices = new HashMap<>();
 
     //Drinks
-    private static final Map<String, String> drinkName = new HashMap<>();
-    private static final Map<String, Double> drinkPrices = new HashMap<>();
+    private static final Map<String, String> drinkName = new LinkedHashMap<>();
+    private static final Map<String, Double> drinkPrices = new LinkedHashMap<>();
 
     //Sides
-    private static final Map<String, String> sideName = new HashMap<>();
-    private static final Map<String, Double> sidePrices = new HashMap<>();
+    private static final Map<String, String> sideName = new LinkedHashMap<>();
+    private static final Map<String, Double> sidePrices = new LinkedHashMap<>();
 
     //Dessert
-    private static final Map<String, String> dessertName = new HashMap<>();
-    private static final Map<String, Double> dessertPrices = new HashMap<>();
+    private static final Map<String, String> dessertName = new LinkedHashMap<>();
+    private static final Map<String, Double> dessertPrices = new LinkedHashMap<>();
     //endregion
 
     //region key/value
@@ -119,10 +119,24 @@ public class Menu {
 
     //setting custom printer method for displaying each key/value (similar to toString)
     public void printMenu(Map<String, String> names, Map<String, Double> prices){
+        //sets condition for printing out name and price equally in every line
+        int keyLength = 0;
+        int nameLength = 0;
+        for (String key : names.keySet()) {
+            keyLength = Math.max(keyLength, key.length()); //compares previous length to current key length and returns whichever number is bigger
+            nameLength = Math.max(nameLength, names.get(key).length());
+        }
+
+        nameLength += 2; //adds extra space
+
+        //formatting outside of loop
+        String format = "[%-" + keyLength + "s] %-" + nameLength + "s $%.2f%n";
+
+        //print
         for (String key : names.keySet()) { //keySet() returns collection of keys stored in HashMap
             String value = names.get(key); //looks up the value related to the key
             double price = prices.getOrDefault(key, 0.00); //if it can't find key, returns given default value
-            System.out.printf("[%s] %s     $%.2f%n", key, value, price);
+            System.out.printf(format, key, value, price); //formatting added after calculation for final print
         }
     }
 
