@@ -1,5 +1,6 @@
 package ui;
 import model.*;
+import util.ReceiptWriter;
 
 import java.util.*;
 
@@ -7,6 +8,7 @@ public class UserInterface {
     Scanner scanner = new Scanner(System.in);
     Menu menu = new Menu();
     Order order = new Order();
+    ReceiptWriter rw = new ReceiptWriter();
 
 
     public void displayMenu() {
@@ -14,7 +16,7 @@ public class UserInterface {
         while (in) {
             System.out.println("""
                     Home Screen:
-                    🧄Welcome to the Ultimate Garlic Shop🧄
+                    ===🧄Welcome to the Ultimate Garlic Shop🧄===
                     Please choose from following options:
                     1) Place New Order
                     0) Exit
@@ -22,27 +24,36 @@ public class UserInterface {
             int choice1 = Integer.parseInt(scanner.nextLine());
             switch(choice1){
                 case 1 -> {
-                    System.out.println("""
-                            Order Screen:
-                            1) Add Garlic Bread
-                            2) Add Drink
-                            3) Add Side
-                            4) Add Dessert
-                            5) Checkout
-                            0) Cancel Order
-                            """);
-                    int choice2 = Integer.parseInt(scanner.nextLine());
-                    switch(choice2){
-                        case 1 -> processAddItem();
-                        case 2 -> processAddDrink();
-                        case 3 -> processAddSide();
-                        case 4 -> processAddDessert();
-                        case 5 -> processCheckout();
-                        case 0 -> processCancelOrder();
+                    boolean ordering = true;
+                    while (ordering) {
+                        System.out.println("""
+                                ===Order Screen===
+                                1) Add Garlic Bread
+                                2) Add Drink
+                                3) Add Side
+                                4) Add Dessert
+                                5) Checkout
+                                0) Cancel Order
+                                """);
+                        int choice2 = Integer.parseInt(scanner.nextLine());
+                        switch (choice2) {
+                            case 1 -> processAddItem();
+                            case 2 -> processAddDrink();
+                            case 3 -> processAddSide();
+                            case 4 -> processAddDessert();
+                            case 5 -> {
+                                processCheckout();
+                                ordering = false;
+                            }
+                            case 0 -> {
+                                processCancelOrder();
+                                ordering = false;
+                            }
+                        }
                     }
                 }
-                case 2 -> {
-                    System.out.println("May your day be full of garlic!");
+                case 0 -> {
+                    System.out.println("===🧄May your day be full of garlic!🧄===");
                     in = false;
                 }
             }
@@ -157,11 +168,11 @@ public class UserInterface {
         if (addTopping.equalsIgnoreCase("yes")){
             GarlicBread gb = new GarlicBread("Garlic Bread with Topping(s)", size, quantity, breadType, isSpecialized, toppings);
             order.addItem(gb);
-            System.out.println("Garlic Bread with Topping(s) added to order!🧄");
+            System.out.println("Garlic Bread with Topping(s) added to order!🧄\n");
         } else {
             GarlicBread gb = new GarlicBread("Classic Garlic Bread", size, quantity, breadType, isSpecialized, toppings);
             order.addItem(gb);
-            System.out.println("Classic Garlic Bread added to order!🧄");
+            System.out.println("Classic Garlic Bread added to order!🧄\n");
         }
     }
 
@@ -210,11 +221,27 @@ public class UserInterface {
     }
 
     public void processCheckout(){
-
+        boolean validate = order.checkout();
+        if (!validate) {
+            System.out.println("Checkout failed.");
+            return;
+        }
+        rw.saveReceipt(order);
+        System.out.println("Order successfully processed!");
+        order.cancelOrder(); //resets order for next user session
     }
 
     public void processCancelOrder(){
-
+        System.out.println("""
+                Proceed to cancel order?
+                o Yes
+                o No
+                """);
+        String choice = scanner.nextLine();
+        if (choice.equalsIgnoreCase("yes")){
+            order.cancelOrder();
+            System.out.println("Your order has been canceled.");
+        }
     }
 
     //helper method to validate user input
