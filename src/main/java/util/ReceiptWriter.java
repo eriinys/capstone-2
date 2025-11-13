@@ -47,7 +47,7 @@ public class ReceiptWriter {
                 Conversion convert = new Conversion();
                 bw.write("--------------------------------------------------");
                 bw.newLine();
-                bw.write(String.format("%-20s  %20s %.8f", "TOTAL", "₿", convert.getConvert(order.getTotalCost())));
+                bw.write(String.format("%-20s  %17s %.8f", "TOTAL", "₿", convert.getConvert(order.getTotalCost())));
                 bw.newLine();
                 bw.write("--------------------------------------------------");
             }
