@@ -15,13 +15,14 @@ public class ReceiptWriter {
     LocalTime time = LocalTime.now();
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
-
     LocalDateTime datetime = LocalDateTime.now();
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
-    String receiptName = datetime.format(dateTimeFormatter); //create receipt file name (by date/time)
 
     public void saveReceipt(Order order) {
+        String receiptName = datetime.format(dateTimeFormatter); //create receipt file name (by date/time)
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/resources/ReceiptFolder/" + receiptName))) {
+
             //header
             bw.write("--------------------------------------------------");
             bw.newLine();
@@ -41,7 +42,7 @@ public class ReceiptWriter {
             bw.write(String.format("%-20s  %20s %.2f" , "TOTAL", "$", order.getTotalCost()));
             bw.newLine();
             bw.write("--------------------------------------------------");
-
+            bw.flush();
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
             throw new RuntimeException(e);

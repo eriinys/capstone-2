@@ -8,15 +8,24 @@ public class UserInterface {
     Scanner scanner = new Scanner(System.in);
     Menu menu = new Menu();
     Order order = new Order();
-    ReceiptWriter rw = new ReceiptWriter();
-
 
     public void displayMenu() {
         boolean in = true;
         while (in) {
             System.out.println("""
-                    Home Screen:
+                                    -Home Screen-
                     ===🧄Welcome to the Ultimate Garlic Shop🧄===
+                    ==============𝕎𝕖 𝕒𝕔𝕔𝕖𝕡𝕥 ₿𝕚𝕥𝕔𝕠𝕚𝕟!==============
+                                    ⠀⠀⠀⠀⣿⡇⠀⢸⣿⡇⠀⠀⠀⠀
+                                    ⠸⠿⣿⣿⣿⡿⠿⠿⣿⣿⣿⣶⣄⠀
+                                    ⠀⠀⢸⣿⣿⡇⠀⠀⠀⠈⣿⣿⣿⠀
+                                    ⠀⠀⢸⣿⣿⡇⠀⠀⢀⣠⣿⣿⠟⠀
+                                    ⠀⠀⢸⣿⣿⡿⠿⠿⠿⣿⣿⣥⣄⠀
+                                    ⠀⠀⢸⣿⣿⡇⠀⠀⠀⠀⢻⣿⣿⣧
+                                    ⠀⠀⢸⣿⣿⡇⠀⠀⠀⠀⣼⣿⣿⣿
+                                    ⢰⣶⣿⣿⣿⣷⣶⣶⣾⣿⣿⠿⠛⠁
+                                    ⠀⠀⠀⠀⣿⡇⠀⢸⣿⡇⠀⠀⠀⠀
+                    ==============================================
                     Please choose from following options:
                     1) Place New Order
                     0) Exit
@@ -42,8 +51,10 @@ public class UserInterface {
                             case 3 -> processAddSide();
                             case 4 -> processAddDessert();
                             case 5 -> {
-                                processCheckout();
-                                ordering = false;
+                                boolean checkout = processCheckout();
+                                if (checkout) {
+                                    ordering = false;
+                                }
                             }
                             case 0 -> {
                                 boolean cancel = processCancelOrder();
@@ -247,15 +258,30 @@ public class UserInterface {
         order.addItem(dessert);
     }
 
-    public void processCheckout(){
+    public boolean processCheckout(){
         boolean validate = order.checkout();
         if (!validate) {
-            System.out.println("Checkout failed.");
-            return;
+            System.out.println("Checkout failed.\n");
+            return false; //checks if user meets the minimum purchase requirement and returns false when requirement is not met
         }
-        rw.saveReceipt(order);
-        System.out.println("Order successfully processed!\n");
-        order.cancelOrder(); //resets order for next user session
+        System.out.println("""
+                Proceed to checkout?
+                o Yes
+                o No
+                """);
+        String choice = scanner.nextLine().toLowerCase();
+        if (choice.equalsIgnoreCase("yes")){
+            ReceiptWriter rw = new ReceiptWriter();
+            rw.saveReceipt(order);
+            System.out.println("Order successfully processed!\n");
+            order.cancelOrder(); //resets order for next user session
+            return true;
+        }
+        while(!choice.contains("yes") && !choice.contains("no")){
+            System.out.println("Please enter yes or no.");
+            choice = scanner.nextLine().toLowerCase();
+        }
+        return false;
     }
 
     public boolean processCancelOrder(){
@@ -264,7 +290,7 @@ public class UserInterface {
                 o Yes
                 o No
                 """);
-        String choice = scanner.nextLine();
+        String choice = scanner.nextLine().toLowerCase();
         if (choice.equalsIgnoreCase("yes")){
             order.cancelOrder();
             System.out.println("Your order has been canceled.");
