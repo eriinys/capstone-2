@@ -13,14 +13,28 @@ public class Dessert extends Product{
 
     @Override
     public String getSummary() {
-        return String.format("""
-                =============🍨Dessert🍨=============
-                 -Dessert Type:
-                   -%s
-                 -Quantity:
-                   -%d
-                 -Dessert Total:   $%.2f
-                """, getItemName(), getQuantity(), getPrice());
+        String summary = "";
+        if (!convertToBtc()) {
+            summary = String.format("""
+                    =============🍨Dessert🍨=============
+                     -Dessert Type:
+                       -%s
+                     -Quantity:
+                       -%d
+                     -Dessert Total:   $%.2f
+                    """, getItemName(), getQuantity(), getPrice());
+        }
+        if (convertToBtc()) {
+            Conversion convert = new Conversion();
+            summary = String.format("""
+                    =============🍨Dessert🍨=============
+                     -Dessert Type:
+                       -%s
+                     -Quantity:
+                       -%d
+                     -Dessert Total:   ₿%.8f
+                    """, getItemName(), getQuantity(), convert.getConvert(getPrice()));
+        }
+        return summary;
     }
-
 }

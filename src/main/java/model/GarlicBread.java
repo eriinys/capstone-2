@@ -78,33 +78,68 @@ public class GarlicBread extends Product{
 
     @Override
     public String getSummary() {
-        String bread = getBreadType();
-        String breadSize = String.format("%s     +$%.2f", getSize().toUpperCase(), getSizePrice());
-        StringBuilder sb = new StringBuilder();
-        for (Topping t : toppings){
-            sb.append(t.getName());
-            sb.append(" x").append(t.getPortion());
-            sb.append(" +$").append(String.format("%.2f", t.getTotalPrice()));
+        String summary ="";
+        if(!convertToBtc()) {
+            String bread = getBreadType();
+            String breadSize = String.format("%s     +$%.2f", getSize().toUpperCase(), getSizePrice());
+            StringBuilder sb = new StringBuilder();
+            for (Topping t : toppings) {
+                sb.append(t.getName());
+                sb.append(" x").append(t.getPortion());
+                sb.append(" +$").append(String.format("%.2f", t.getTotalPrice())).append("\n");
+            }
+            String isSpecialized;
+            if (specialized) {
+                isSpecialized = String.format("Cheese Stuffed Garlic Bread     +$%.2f", getSpecialPrice());
+            } else {
+                isSpecialized = "No Special Option";
+            }
+            summary = String.format("""
+                    =============🥖Garlic Bread🥖=============
+                     -Bread Type:
+                       -%s
+                     -Size:
+                       -%s
+                     -Toppings:
+                       -%s
+                     -Special Option:
+                       -%s
+                     -Quantity:
+                       -%d
+                     -Garlic Bread Total:   $%.2f
+                    """, bread, breadSize, sb, isSpecialized, getQuantity(), getPrice());
         }
-        String isSpecialized;
-        if (specialized){
-            isSpecialized = String.format("Cheese Stuffed Garlic Bread     +$%.2f", getSpecialPrice());
-        } else {
-            isSpecialized = "No Special Option";
+        if(convertToBtc()) {
+            Conversion convert = new Conversion();
+            String bread = getBreadType();
+            String breadSize = String.format("%s     +₿%.8f", getSize().toUpperCase(), getSizePrice());
+            StringBuilder sb = new StringBuilder();
+            for (Topping t : toppings) {
+                sb.append(t.getName());
+                sb.append(" x").append(t.getPortion());
+                sb.append(" +₿").append(String.format("%.8f", convert.getConvert(t.getTotalPrice()))).append("\n");
+            }
+            String isSpecialized;
+            if (specialized) {
+                isSpecialized = String.format("Cheese Stuffed Garlic Bread     +₿%.8f", convert.getConvert(getSpecialPrice()));
+            } else {
+                isSpecialized = "No Special Option";
+            }
+            summary = String.format("""
+                    =============🥖Garlic Bread🥖=============
+                     -Bread Type:
+                       -%s
+                     -Size:
+                       -%s
+                     -Toppings:
+                       -%s
+                     -Special Option:
+                       -%s
+                     -Quantity:
+                       -%d
+                     -Garlic Bread Total:   ₿%.8f
+                    """, bread, breadSize, sb, isSpecialized, getQuantity(), convert.getConvert(getPrice()));
         }
-        return String.format("""
-                =============🥖Garlic Bread🥖=============
-                 -Bread Type:
-                   -%s
-                 -Size:
-                   -%s
-                 -Toppings:
-                   -%s
-                 -Special Option:
-                   -%s
-                 -Quantity:
-                   -%d
-                 -Garlic Bread Total:   $%.2f
-                 """, bread, breadSize, sb, isSpecialized, getQuantity() ,getPrice());
+        return summary;
     }
 }

@@ -172,6 +172,10 @@ public class UserInterface {
 
                 System.out.println("Would you like to add another toppings?");
                 String addMore = scanner.nextLine();
+                while(!addMore.equalsIgnoreCase("yes") && !addMore.equalsIgnoreCase("no")){
+                    System.out.println("Please enter yes or no.");
+                    addMore = scanner.nextLine();
+                }
                 if (addMore.equalsIgnoreCase("no")){
                     inTopping = false; //ends topping loop
                 }
@@ -185,9 +189,14 @@ public class UserInterface {
                 o No
                 """);
         String specialized = scanner.nextLine();
+        while(!specialized.equalsIgnoreCase("yes") && !specialized.equalsIgnoreCase("no")){
+            System.out.println("Please enter yes or no.");
+            specialized = scanner.nextLine();
+        }
         if (specialized.equalsIgnoreCase("yes")) {
             isSpecialized = true;
         }
+
         System.out.println("Enter quantity (number):");
         int quantity = Integer.parseInt(scanner.nextLine());
 
@@ -223,7 +232,7 @@ public class UserInterface {
 
         Drinks drink = new Drinks(itemName, size, quantity);
         drink.setBasePrice(basePrice);
-        order.addItem(drink); //adds drink to order
+        order.addItem(drink);
     }
 
     public void processAddSide(){
@@ -259,27 +268,45 @@ public class UserInterface {
     }
 
     public boolean processCheckout(){
-        boolean validate = order.checkout();
-        if (!validate) {
-            System.out.println("Checkout failed.\n");
-            return false; //checks if user meets the minimum purchase requirement and returns false when requirement is not met
-        }
         System.out.println("""
                 Proceed to checkout?
                 o Yes
                 o No
                 """);
-        String choice = scanner.nextLine().toLowerCase();
+        String choice = scanner.nextLine();
+        while(!choice.equalsIgnoreCase("yes") && !choice.equalsIgnoreCase("no")){
+            System.out.println("Please enter yes or no.");
+            choice = scanner.nextLine().toLowerCase();
+        }
         if (choice.equalsIgnoreCase("yes")){
+            System.out.println("""
+                Choose a payment option:
+                o Cash
+                o ₿𝕚𝕥coin
+                """);
+            String payment = scanner.nextLine();
+            while(!payment.equalsIgnoreCase("cash") && !payment.equalsIgnoreCase("bitcoin")){
+                System.out.println("Please enter cash or bitcoin.");
+                payment = scanner.nextLine();
+            }
+            if (payment.equalsIgnoreCase("Cash")){
+                order.paymentMethod(false);
+            }
+            if (payment.equalsIgnoreCase("Bitcoin")){
+                order.paymentMethod(true);
+            }
+
+            boolean validate = order.checkout();
+            if (!validate) {
+                System.out.println("Checkout failed.\n");
+                return false; //checks if user meets the minimum purchase requirement and returns false when requirement is not met
+            }
+
             ReceiptWriter rw = new ReceiptWriter();
             rw.saveReceipt(order);
             System.out.println("Order successfully processed!\n");
-            order.cancelOrder(); //resets order for next user session
+            order.cancelOrder(); //resets order for next order session
             return true;
-        }
-        while(!choice.contains("yes") && !choice.contains("no")){
-            System.out.println("Please enter yes or no.");
-            choice = scanner.nextLine().toLowerCase();
         }
         return false;
     }
@@ -290,15 +317,15 @@ public class UserInterface {
                 o Yes
                 o No
                 """);
-        String choice = scanner.nextLine().toLowerCase();
+        String choice = scanner.nextLine();
+        while(!choice.equalsIgnoreCase("yes") && !choice.equalsIgnoreCase("no")){
+            System.out.println("Please enter yes or no.");
+            choice = scanner.nextLine();
+        }
         if (choice.equalsIgnoreCase("yes")){
             order.cancelOrder();
             System.out.println("Your order has been canceled.");
             return true;
-        }
-        while(!choice.contains("yes") && !choice.contains("no")){
-            System.out.println("Please enter yes or no.");
-            choice = scanner.nextLine().toLowerCase();
         }
         return false;
     }

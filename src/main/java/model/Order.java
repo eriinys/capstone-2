@@ -69,4 +69,17 @@ public class Order {
         return sb.toString();
     }
 
+    //added method to be called in UI that checks if User wants to pay in CASH/BTC and applies conversion accordingly
+    public void paymentMethod(boolean convert){
+        if (convert){
+            for (Product p : productList){
+                p.setConvertToBtc(convert);
+            }
+        }
+    }
+    //btc getter used to call in ReceiptWriter for writing converted/non-converted total
+    public boolean isBtc(){
+        return productList.get(0).convertToBtc();
+    }
+
 }

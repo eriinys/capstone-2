@@ -31,7 +31,6 @@ public class Topping {
         return portion;
     }
 
-    //Add price calculation for size
 
     public double getTotalPrice(){
         double total;

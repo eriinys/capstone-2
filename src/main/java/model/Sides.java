@@ -13,14 +13,29 @@ public class Sides extends Product {
 
     @Override
     public String getSummary() {
-        return String.format("""
-                =============🥗Side🥗=============
-                 -Side Type:
-                   -%s
-                 -Quantity:
-                   -%d
-                 -Side Total:   $%.2f
-                """, getItemName(), getQuantity(), getPrice());
+        String summary = "";
+        if (!convertToBtc()) {
+            summary = String.format("""
+                    =============🥗Side🥗=============
+                     -Side Type:
+                       -%s
+                     -Quantity:
+                       -%d
+                     -Side Total:   $%.2f
+                    """, getItemName(), getQuantity(), getPrice());
+        }
+        if (convertToBtc()) {
+            Conversion convert = new Conversion();
+            summary = String.format("""
+                    =============🥗Side🥗=============
+                     -Side Type:
+                       -%s
+                     -Quantity:
+                       -%d
+                     -Side Total:   ₿%.8f
+                    """, getItemName(), getQuantity(), convert.getConvert(getPrice()));
+        }
+        return summary;
     }
 
 

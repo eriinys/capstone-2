@@ -37,11 +37,20 @@ public class ReceiptWriter {
             bw.write(order.printOrderSummary());
 
             //total
-            bw.write("--------------------------------------------------");
-            bw.newLine();
-            bw.write(String.format("%-20s  %20s %.2f" , "TOTAL", "$", order.getTotalCost()));
-            bw.newLine();
-            bw.write("--------------------------------------------------");
+            if (!order.isBtc()){
+                bw.write("--------------------------------------------------");
+                bw.newLine();
+                bw.write(String.format("%-20s  %20s %.2f", "TOTAL", "$", order.getTotalCost()));
+                bw.newLine();
+                bw.write("--------------------------------------------------");
+            } else {
+                Conversion convert = new Conversion();
+                bw.write("--------------------------------------------------");
+                bw.newLine();
+                bw.write(String.format("%-20s  %20s %.8f", "TOTAL", "₿", convert.getConvert(order.getTotalCost())));
+                bw.newLine();
+                bw.write("--------------------------------------------------");
+            }
             bw.flush();
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());

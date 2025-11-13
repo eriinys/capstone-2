@@ -39,16 +39,33 @@ public class Drinks extends Product{
 
     @Override
     public String getSummary() {
-        return String.format("""
-                 =============🍹Drink🍹=============
-                  -Drink Type:
-                    -%s
-                  -Size:
-                    -%s
-                  -Quantity:
-                    -%d
-                  -Drink Total:   $%.2f
-                 """, getItemName(), getSize().toUpperCase() ,getQuantity(), getPrice());
+        String summary = "";
+        if (!convertToBtc()) {
+            summary = String.format("""
+                    =============🍹Drink🍹=============
+                     -Drink Type:
+                       -%s
+                     -Size:
+                       -%s
+                     -Quantity:
+                       -%d
+                     -Drink Total:   $%.2f
+                    """, getItemName(), getSize().toUpperCase(), getQuantity(), getPrice());
+        }
+        if (convertToBtc()) {
+            Conversion convert = new Conversion();
+            summary = String.format("""
+                    =============🍹Drink🍹=============
+                     -Drink Type:
+                       -%s
+                     -Size:
+                       -%s
+                     -Quantity:
+                       -%d
+                     -Drink Total:   ₿%.8f
+                    """, getItemName(), getSize().toUpperCase(), getQuantity(), convert.getConvert(getPrice()));
+        }
+        return summary;
     }
 
 }

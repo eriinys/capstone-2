@@ -5,6 +5,7 @@ public abstract class Product {
     protected String itemName;
     protected int quantity;
     protected double basePrice;
+    protected boolean btc = false;
 
     public Product(String itemName, int quantity) {
         this.itemName = itemName;
@@ -37,6 +38,15 @@ public abstract class Product {
 
     public void setBasePrice(double bp) {
         basePrice = bp;
+    }
+
+    //is called in Order class to set
+    public void setConvertToBtc(boolean isBtc){
+        btc = isBtc;
+    }
+    //is called in subclasses of Product to check and print summary accordingly
+    public boolean convertToBtc(){
+        return btc;
     }
 
     public abstract double getPrice();
