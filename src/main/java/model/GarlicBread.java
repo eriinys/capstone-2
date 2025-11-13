@@ -26,6 +26,10 @@ public class GarlicBread extends Product{
     public String getSize(){
         return size; //overrides default getSize method's empty string
     }
+    @Override
+    public boolean hasSize(){
+        return true; //override hasSize to true for product with size
+    }
 
     @Override
     public double getBasePrice() {
@@ -59,11 +63,6 @@ public class GarlicBread extends Product{
 
     public List<Topping> getToppings() {
         return toppings;
-    }
-
-    @Override
-    public boolean hasSize(){
-        return true; //override hasSize to true for product with size
     }
 
     @Override
@@ -112,7 +111,7 @@ public class GarlicBread extends Product{
         if(convertToBtc()) {
             Conversion convert = new Conversion();
             String bread = getBreadType();
-            String breadSize = String.format("%s     +₿%.8f", getSize().toUpperCase(), getSizePrice());
+            String breadSize = String.format("%s     +₿%.8f", getSize().toUpperCase(), convert.getConvert(getSizePrice()));
             StringBuilder sb = new StringBuilder();
             for (Topping t : toppings) {
                 sb.append(t.getName());
