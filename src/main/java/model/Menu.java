@@ -6,10 +6,6 @@ public class Menu {
     //data is shared across every Menu object that is used for validating user input when choosing item from menu option
 
     //region field
-    //Garlic Bread
-    private static final String classicGb = "Classic Garlic Bread";
-    private static final double classicGbPrice = 4.50;
-
     //Regular Topping
     private static final Map<String, String> regularTopping = new LinkedHashMap<>();
     private static final Map<String, Double> regularPrices = new LinkedHashMap<>();
@@ -32,7 +28,7 @@ public class Menu {
     //endregion
 
     //region key/value
-    static { //used to initialize static field (HashMap) assigning key/value
+    static { //used to initialize static field (LinkedHashMap) when Menu is first referenced; assigns key/value
 
         //Regular Topping
         regularTopping.put("RT1", "Garlic Mushroom");
@@ -133,7 +129,7 @@ public class Menu {
         String format = "[%-" + keyLength + "s] %-" + nameLength + "s $%.2f%n";
 
         //print
-        for (String key : names.keySet()) { //keySet() returns collection of keys stored in HashMap
+        for (String key : names.keySet()) { //keySet() returns collection of keys stored in LinkedHashMap
             String value = names.get(key); //looks up the value related to the key
             double price = prices.getOrDefault(key, 0.00); //if it can't find key, returns given default value
             System.out.printf(format, key, value, price); //formatting added after calculation for final print

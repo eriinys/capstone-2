@@ -154,8 +154,8 @@ public class UserInterface {
                     menu.printMenu(Menu.getPremiumTopping(), Menu.getPremiumPrices()); //calls collection of premium topping from Menu
 
                     String chosenTopping = readUserInput(Menu.getPremiumTopping());
-                    String itemName = Menu.getPremiumTopping().get(chosenTopping);
-                    double basePrice = Menu.getPremiumPrices().get(chosenTopping);
+                    String itemName = Menu.getPremiumTopping().get(chosenTopping); //returns value (item name) of chosenTopping
+                    double basePrice = Menu.getPremiumPrices().get(chosenTopping); //returns value (item price) of chosenTopping
 
                     int portion = validNumber(scanner,
                     """
@@ -163,7 +163,7 @@ public class UserInterface {
                             1
                             2
                             3
-                            \n""");
+                            """);
                     Topping t = new Topping(itemName, isPremium, portion);
                     t.setBasePrice(basePrice);
                     toppings.add(t);
@@ -182,13 +182,13 @@ public class UserInterface {
                                     1
                                     2
                                     3
-                                    \n""");
+                                    """);
                     Topping t = new Topping(itemName, isPremium, portion);
                     t.setBasePrice(basePrice);
                     toppings.add(t);
                 }
 
-                System.out.println("Would you like to add another toppings?");
+                System.out.println("Would you like to add another topping? \n");
                 String addMore = scanner.nextLine();
                 while(!addMore.equalsIgnoreCase("yes") && !addMore.equalsIgnoreCase("no")){
                     System.out.println("Please enter yes or no.");
@@ -349,7 +349,7 @@ public class UserInterface {
     private String readUserInput(Map<String, String> menuChoice){
         String choice;
         while(true){
-            System.out.println("Enter choice (inside []): ");
+            System.out.println("Enter choice (inside []): \n");
             choice = scanner.nextLine().toUpperCase();
             if (menuChoice.containsKey(choice)){
                 return choice;
