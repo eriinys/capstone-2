@@ -1,7 +1,7 @@
 # Capstone 2: Custom Food Shop
 
-## <center>🧄*The Ultimate Garlic Shop*🧄
-### <center> *===Accepts $ & ₿===*⠀⠀
+## 🧄*The Ultimate Garlic Shop*🧄
+### ===*Accepts $ & ₿*===
 
 ## Project Overview
 - Created a CLI sales application system that implements OOP design.
