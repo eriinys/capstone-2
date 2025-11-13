@@ -139,13 +139,13 @@ public class UserInterface {
                     String itemName = Menu.getPremiumTopping().get(chosenTopping);
                     double basePrice = Menu.getPremiumPrices().get(chosenTopping);
 
-                    System.out.println("""
+                    int portion = validNumber(scanner,
+                    """
                             Choose portion (enter number):
                             1
                             2
                             3
-                            """);
-                    int portion = Integer.parseInt(scanner.nextLine());
+                            \n""");
                     Topping t = new Topping(itemName, isPremium, portion);
                     t.setBasePrice(basePrice);
                     toppings.add(t);
@@ -158,13 +158,13 @@ public class UserInterface {
                     String itemName = Menu.getRegularTopping().get(chosenTopping);
                     double basePrice = Menu.getRegularPrices().get(chosenTopping);
 
-                    System.out.println("""
-                            Choose portion (enter number):
-                            1
-                            2
-                            3
-                            """);
-                    int portion = Integer.parseInt(scanner.nextLine());
+                    int portion = validNumber(scanner,
+                            """
+                                    Choose portion (enter number):
+                                    1
+                                    2
+                                    3
+                                    \n""");
                     Topping t = new Topping(itemName, isPremium, portion);
                     t.setBasePrice(basePrice);
                     toppings.add(t);
@@ -197,8 +197,7 @@ public class UserInterface {
             isSpecialized = true;
         }
 
-        System.out.println("Enter quantity (number):");
-        int quantity = Integer.parseInt(scanner.nextLine());
+        int quantity = validNumber(scanner, "Enter quantity (1-3):\n");
 
         if (addTopping.equalsIgnoreCase("yes")){
             GarlicBread gb = new GarlicBread("Garlic Bread with Topping(s)", size, quantity, breadType, isSpecialized, toppings);
@@ -226,10 +225,12 @@ public class UserInterface {
         o L  +$3.50
         """);
         String size = scanner.nextLine().toLowerCase();
+        while(!size.equalsIgnoreCase("s") && !size.equalsIgnoreCase("m") && !size.equalsIgnoreCase("l")){
+            System.out.println("Please enter S, M, or L");
+            size = scanner.nextLine().toLowerCase();
+        }
 
-        System.out.println("How many would you like (enter number)?:\n");
-        int quantity = Integer.parseInt(scanner.nextLine());
-
+        int quantity = validNumber(scanner, "How many would you like (enter 1-3)?:\n");
         Drinks drink = new Drinks(itemName, size, quantity);
         drink.setBasePrice(basePrice);
         order.addItem(drink);
@@ -243,9 +244,7 @@ public class UserInterface {
         String itemName = Menu.getSideName().get(chosenSide);
         double basePrice = Menu.getSidePrices().get(chosenSide);
 
-        System.out.println("How many would you like (enter number)?:\n");
-        int quantity = Integer.parseInt(scanner.nextLine());
-
+        int quantity = validNumber(scanner, "How many would you like (enter 1-3)?:\n");
         Sides side = new Sides(itemName, quantity);
         side.setBasePrice(basePrice);
         order.addItem(side);
@@ -259,9 +258,7 @@ public class UserInterface {
         String itemName = Menu.getDessertName().get(chosenDessert);
         double basePrice = Menu.getDessertPrices().get(chosenDessert);
 
-        System.out.println("How many would you like (enter number)?:\n");
-        int quantity = Integer.parseInt(scanner.nextLine());
-
+        int quantity = validNumber(scanner, "How many would you like (enter 1-3)?:\n");
         Dessert dessert = new Dessert(itemName, quantity);
         dessert.setBasePrice(basePrice);
         order.addItem(dessert);
@@ -340,6 +337,22 @@ public class UserInterface {
                 return choice;
             } else {
                 System.out.println("Invalid input. Please enter a valid choice inside [].");
+            }
+        }
+    }
+
+    private static int validNumber(Scanner scanner, String prompt){
+        while(true){
+            System.out.println(prompt);
+            try {
+                int input = Integer.parseInt(scanner.nextLine());
+                if (input == 0 || input > 3){
+                    System.err.println("Error: Value cannot be 0 or greater than 3. Please enter a number from 1-3\n");
+                } else {
+                    return input;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input. Please enter only number \n");
             }
         }
     }
