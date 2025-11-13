@@ -29,43 +29,43 @@
 
 #### Order Screen:
 
-![2orderscreen.png](Images/2orderscreen.png)
+![2orderscreen.png](src/main/resources/Images/2orderscreen.png)
 
 #### Select Bread & Size:
-![3breadsize.png](Images/3breadsize.png)
+![3breadsize.png](src/main/resources/Images/3breadsize.png)
 
 #### Add Topping:
-![4addtopping.png](Images/4addtopping.png)
+![4addtopping.png](src/main/resources/Images/4addtopping.png)
 
 #### Regular Topping:
-![5regularmenu.png](Images/5regularmenu.png)
+![5regularmenu.png](src/main/resources/Images/5regularmenu.png)
 
 #### Premium Topping:
-![6premium.png](Images/6premium.png)
+![6premium.png](src/main/resources/Images/6premium.png)
 
 #### Special Option:
-![7specialized.png](Images/7specialized.png)
+![7specialized.png](src/main/resources/Images/7specialized.png)
 
 #### Drink Menu:
-![8drink.png](Images/8drink.png)
+![8drink.png](src/main/resources/Images/8drink.png)
 
 #### Side Menu:
-![9side.png](Images/9side.png)
+![9side.png](src/main/resources/Images/9side.png)
 
 #### Dessert Menu:
-![10dessert.png](Images/10dessert.png)
+![10dessert.png](src/main/resources/Images/10dessert.png)
 
 #### Checkout:
-![11checkout.png](Images/11checkout.png)
+![11checkout.png](src/main/resources/Images/11checkout.png)
 
 #### Cancel Order:
-![12cancelorder.png](Images/12cancelorder.png)
+![12cancelorder.png](src/main/resources/Images/12cancelorder.png)
 
 #### Exit:
-![13exit.png](Images/13exit.png)
+![13exit.png](src/main/resources/Images/13exit.png)
 
 #### Receipt:
-![14receipt.png](Images/14receipt.png)
+![14receipt.png](src/main/resources/Images/14receipt.png)
 
 ## Interesting Feature (code) Added:
 #### Inside Menu Class:
