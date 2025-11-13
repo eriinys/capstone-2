@@ -12,11 +12,11 @@ public class Menu {
 
     //Regular Topping
     private static final Map<String, String> regularTopping = new LinkedHashMap<>();
-    private static final Map<String, Double> regularPrices = new HashMap<>();
+    private static final Map<String, Double> regularPrices = new LinkedHashMap<>();
 
     //Premium Topping
     private static final Map<String, String> premiumTopping = new LinkedHashMap<>();
-    private static final Map<String, Double> premiumPrices = new HashMap<>();
+    private static final Map<String, Double> premiumPrices = new LinkedHashMap<>();
 
     //Drinks
     private static final Map<String, String> drinkName = new LinkedHashMap<>();
