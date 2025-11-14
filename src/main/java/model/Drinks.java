@@ -2,7 +2,6 @@ package model;
 
 public class Drinks extends Product{
     private String size;
-    private double price;
 
     public Drinks(String itemName, String size, int quantity) {
         super(itemName, quantity);
@@ -44,26 +43,26 @@ public class Drinks extends Product{
             summary = String.format("""
                     =============🍹Drink🍹=============
                      -Drink Type:
-                       -%s
+                       -%s     +$%.2f
                      -Size:
-                       -%s
+                       -%s     +$%.2f
                      -Quantity:
                        -%d
                      -Drink Total:   $%.2f
-                    """, getItemName(), getSize().toUpperCase(), getQuantity(), getPrice());
+                    """, getItemName(), getBasePrice(),  getSize().toUpperCase(), getSizePrice(), getQuantity(), getPrice());
         }
         if (convertToBtc()) {
             Conversion convert = new Conversion();
             summary = String.format("""
                     =============🍹Drink🍹=============
                      -Drink Type:
-                       -%s
+                       -%s     +₿%.8f
                      -Size:
-                       -%s
+                       -%s     +₿%.8f
                      -Quantity:
                        -%d
                      -Drink Total:   ₿%.8f
-                    """, getItemName(), getSize().toUpperCase(), getQuantity(), convert.getConvert(getPrice()));
+                    """, getItemName(), convert.getConvert(getBasePrice()), getSize().toUpperCase(), convert.getConvert(getSizePrice()), getQuantity(), convert.getConvert(getPrice()));
         }
         return summary;
     }
