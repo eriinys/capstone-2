@@ -33,7 +33,7 @@ public class Drinks extends Product{
 
     @Override
     public double getPrice() {
-        return getBasePrice() + getSizePrice();
+        return (getBasePrice() + getSizePrice()) * getQuantity();
     }
 
     @Override

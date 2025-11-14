@@ -8,7 +8,7 @@ public class Sides extends Product {
 
     @Override
     public double getPrice(){
-        return getBasePrice();
+        return getBasePrice() * getQuantity();
     }
 
     @Override
