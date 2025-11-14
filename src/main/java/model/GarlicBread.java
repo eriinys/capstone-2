@@ -83,9 +83,12 @@ public class GarlicBread extends Product{
             String breadSize = String.format("%s     +$%.2f", getSize().toUpperCase(), getSizePrice());
             StringBuilder sb = new StringBuilder();
             for (Topping t : toppings) {
-                sb.append(t.getName());
-                sb.append(" x").append(t.getPortion());
-                sb.append(" +$").append(String.format("%.2f", t.getTotalPrice())).append("\n");
+                sb.append("  -")
+                        .append(t.getName())
+                        .append(" x").append(t.getPortion())
+                        .append(" +$")
+                        .append(String.format("%.2f", t.getTotalPrice()))
+                        .append("\n");
             }
             String isSpecialized;
             if (specialized) {
@@ -100,11 +103,11 @@ public class GarlicBread extends Product{
                      -Size:
                        -%s
                      -Toppings:
-                       -%s
+                    %s
                      -Special Option:
                        -%s
                      -Quantity:
-                       -%d
+                       x%d
                      -Garlic Bread Total:   $%.2f
                     """, bread, breadSize, sb, isSpecialized, getQuantity(), getPrice());
         }
@@ -114,9 +117,12 @@ public class GarlicBread extends Product{
             String breadSize = String.format("%s     +₿%.8f", getSize().toUpperCase(), convert.getConvert(getSizePrice()));
             StringBuilder sb = new StringBuilder();
             for (Topping t : toppings) {
-                sb.append(t.getName());
-                sb.append(" x").append(t.getPortion());
-                sb.append(" +₿").append(String.format("%.8f", convert.getConvert(t.getTotalPrice()))).append("\n");
+                sb.append("  -")
+                        .append(t.getName())
+                        .append(" x").append(t.getPortion())
+                        .append(" +₿")
+                        .append(String.format("%.8f", convert.getConvert(t.getTotalPrice())))
+                        .append("\n");
             }
             String isSpecialized;
             if (specialized) {
@@ -129,13 +135,13 @@ public class GarlicBread extends Product{
                      -Bread Type:
                        -%s
                      -Size:
-                       -%s
+                      -%s
                      -Toppings:
-                       -%s
+                    %s
                      -Special Option:
                        -%s
                      -Quantity:
-                       -%d
+                       x%d
                      -Garlic Bread Total:   ₿%.8f
                     """, bread, breadSize, sb, isSpecialized, getQuantity(), convert.getConvert(getPrice()));
         }

@@ -20,7 +20,7 @@ public class Dessert extends Product{
                      -Dessert Type:
                        -%s
                      -Quantity:
-                       -%d
+                       x%d
                      -Dessert Total:   $%.2f
                     """, getItemName(), getQuantity(), getPrice());
         }
@@ -31,7 +31,7 @@ public class Dessert extends Product{
                      -Dessert Type:
                        -%s
                      -Quantity:
-                       -%d
+                       x%d
                      -Dessert Total:   ₿%.8f
                     """, getItemName(), getQuantity(), convert.getConvert(getPrice()));
         }

@@ -47,7 +47,7 @@ public class Drinks extends Product{
                      -Size:
                        -%s     +$%.2f
                      -Quantity:
-                       -%d
+                       x%d
                      -Drink Total:   $%.2f
                     """, getItemName(), getBasePrice(),  getSize().toUpperCase(), getSizePrice(), getQuantity(), getPrice());
         }
@@ -60,7 +60,7 @@ public class Drinks extends Product{
                      -Size:
                        -%s     +₿%.8f
                      -Quantity:
-                       -%d
+                       x%d
                      -Drink Total:   ₿%.8f
                     """, getItemName(), convert.getConvert(getBasePrice()), getSize().toUpperCase(), convert.getConvert(getSizePrice()), getQuantity(), convert.getConvert(getPrice()));
         }

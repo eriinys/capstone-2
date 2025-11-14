@@ -20,7 +20,7 @@ public class Sides extends Product {
                      -Side Type:
                        -%s
                      -Quantity:
-                       -%d
+                       x%d
                      -Side Total:   $%.2f
                     """, getItemName(), getQuantity(), getPrice());
         }
@@ -31,7 +31,7 @@ public class Sides extends Product {
                      -Side Type:
                        -%s
                      -Quantity:
-                       -%d
+                       x%d
                      -Side Total:   ₿%.8f
                     """, getItemName(), getQuantity(), convert.getConvert(getPrice()));
         }
